@@ -1,8 +1,36 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 import heapq
 
 def bfs(maze, start, end):
     """Breadth-First Search (defined but returns None)"""
+    queue = deque([start])
+    visited = set([start])
+    parent = {start: None}
+
+    directions = [(-1,0), (1,0), (0,-1), (0,1)]
+
+    while queue:
+        current = queue.popleft()
+
+        # Nếu tìm thấy Pacman
+        if current == end:
+            path = []
+            while current:
+                path.append(current)
+                current = parent[current]
+            return path[::-1]  # Đường đi từ vị trí start -> end
+        
+        # Duyệt các ô lân cận
+        for dx, dy in directions:
+            neighbor = (current[0] + dx, current[1] + dy)
+
+            # Kiểm tra ranh giới
+            if(0 <= neighbor[0] < len(maze) and 0 <= neighbor[1] < len(maze[0]) and maze[neighbor[0]][neighbor[1]] == ' ' and neighbor not in visited):
+                queue.append(neighbor)
+                visited.add(neighbor)
+                parent[neighbor] = current  
+
+    # Trả về None nếu không tìm thấy đường đi
     return None
 
 def dfs(maze, start, end):
