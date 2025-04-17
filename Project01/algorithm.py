@@ -3,7 +3,7 @@ import heapq
 
 
 def bfs(maze, start, end):
-    """Breadth-First Search (defined but returns None)"""
+    """Breadth-First Search"""
     queue = deque([start])
     visited = set([start])
     parent = {start: None}
