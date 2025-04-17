@@ -23,10 +23,10 @@ class Menu:
         start_x = (WIDTH - total_width) // 2
         
         # Algorithm selection buttons
-        self.buttons.append(Button(start_x, 450, button_width, button_height, "BFS", PINK, (200, 100, 150)))
-        self.buttons.append(Button(start_x + button_width + spacing, 450, button_width, button_height, "DFS", GREEN, (100, 200, 100)))
-        self.buttons.append(Button(start_x + 2*(button_width + spacing), 450, button_width, button_height, "UCS", RED, (200, 50, 50)))
-        self.buttons.append(Button(start_x + 3*(button_width + spacing), 450, button_width, button_height, "A*", BLUE, (50, 50, 200)))
+        self.buttons.append(Button(start_x, 450, button_width, button_height, "BFS", BLUE, (200, 100, 150)))
+        self.buttons.append(Button(start_x + button_width + spacing, 450, button_width, button_height, "DFS", PINK, (100, 200, 100)))
+        self.buttons.append(Button(start_x + 2*(button_width + spacing), 450, button_width, button_height, "UCS", ORANGE, (200, 50, 50)))
+        self.buttons.append(Button(start_x + 3*(button_width + spacing), 450, button_width, button_height, "A*", RED, (50, 50, 200)))
         
         # All algorithms button
         self.buttons.append(Button((WIDTH - button_width) // 2, 520, button_width, button_height, "ALL", YELLOW, (200, 200, 50)))

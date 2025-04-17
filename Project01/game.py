@@ -8,7 +8,7 @@ class Game:
     def __init__(self, win, algorithm):
         self.win = win
         self.algorithm = algorithm
-        self.pacman = Pacman(18, 17)
+        self.pacman = Pacman(1, 15)
         self.ghosts = []
         self.create_ghosts()
         self.maze = MAZE
@@ -43,15 +43,15 @@ class Game:
 
     def create_ghosts(self):
         if self.algorithm == "ALL":
-            self.ghosts.append(Ghost(1, 1, "BFS", PINK))
-            self.ghosts.append(Ghost(1, 1, "DFS", GREEN))
-            self.ghosts.append(Ghost(1, 1, "UCS", RED))
-            self.ghosts.append(Ghost(1, 1, "A*", BLUE))
+            self.ghosts.append(Ghost(1, 1, "BFS", BLUE))
+            self.ghosts.append(Ghost(1, 1, "DFS", PINK))
+            self.ghosts.append(Ghost(1, 1, "UCS", ORANGE))
+            self.ghosts.append(Ghost(1, 1, "A*", RED))
         else:
             self.ghosts.append(Ghost(1, 1, self.algorithm, 
-                                 PINK if self.algorithm == "BFS" else 
-                                 GREEN if self.algorithm == "DFS" else 
-                                 RED if self.algorithm == "UCS" else BLUE))
+                                 BLUE if self.algorithm == "BFS" else 
+                                 PINK if self.algorithm == "DFS" else 
+                                 ORANGE if self.algorithm == "UCS" else RED))
             
     def handle_events(self):
         for event in pygame.event.get():
