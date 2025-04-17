@@ -36,7 +36,34 @@ def bfs(maze, start, end):
 
 
 def dfs(maze, start, end):
-    """Depth-First Search (defined but returns None)"""
+    """Depth-First Search"""
+    stack = [(start, [start])]
+    visited = set()
+
+    directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+
+    while stack:
+        current, path = stack.pop()
+
+        if current == end:
+            return path
+
+        if current in visited:
+            continue
+
+        visited.add(current)
+
+        for dx, dy in directions:
+            neighbor = (current[0] + dx, current[1] + dy)
+
+            if (
+                0 <= neighbor[0] < len(maze)
+                and 0 <= neighbor[1] < len(maze[0])
+                and maze[neighbor[0]][neighbor[1]] == " "
+                and neighbor not in visited
+            ):
+                stack.append((neighbor, path + [neighbor]))
+
     return None
 
 
