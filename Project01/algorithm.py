@@ -37,16 +37,21 @@ def bfs(maze, start, end):
 
 def dfs(maze, start, end):
     """Depth-First Search"""
-    stack = [(start, [start])]
+    stack = [start]
     visited = set()
+    parent = {start: None}
 
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
     while stack:
-        current, path = stack.pop()
+        current = stack.pop()
 
         if current == end:
-            return path
+            path = []
+            while current:
+                path.append(current)
+                current = parent[current]
+            return path[::-1]
 
         if current in visited:
             continue
@@ -62,24 +67,30 @@ def dfs(maze, start, end):
                 and maze[neighbor[0]][neighbor[1]] == " "
                 and neighbor not in visited
             ):
-                stack.append((neighbor, path + [neighbor]))
+                stack.append(neighbor)
+                parent[neighbor] = current
 
     return None
 
 
 def ucs(maze, start, end):
-    priority_queue = [(0, start, [start])]
+    priority_queue = [(0, start)]
     visited = set()
+    parent = {start: None}
     cost_so_far = defaultdict(lambda: float("inf"))
     cost_so_far[start] = 0
 
     directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
     while priority_queue:
-        current_cost, current_pos, path = heapq.heappop(priority_queue)
+        current_cost, current_pos = heapq.heappop(priority_queue)
 
         if current_pos == end:
-            return path
+            path = []
+            while current_pos:
+                path.append(current_pos)
+                current_pos = parent[current_pos]
+            return path[::-1]
 
         if current_pos in visited:
             continue
@@ -100,8 +111,8 @@ def ucs(maze, start, end):
 
                 if new_cost < cost_so_far[neighbor]:
                     cost_so_far[neighbor] = new_cost
-                    new_path = path + [neighbor]
-                    heapq.heappush(priority_queue, (new_cost, neighbor, new_path))
+                    parent[neighbor] = current_pos
+                    heapq.heappush(priority_queue, (new_cost, neighbor))
 
     return None
 
