@@ -67,7 +67,7 @@ def measure_ucs_performance(maze, start, end):
     return {
         "path": path,
         "execution_time": execution_time,  # milliseconds
-        "memory_usage": peak, # bytes
+        "memory_usage": peak / 1024, # kilobytes
         "expanded_nodes": expanded_nodes[0],
     }
 
@@ -110,7 +110,7 @@ def measure_dfs_performance(maze, start, end):
     return {
         "path": path,
         "execution_time": execution_time,
-        "memory_usage": peak,
+        "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
 
@@ -163,7 +163,7 @@ def measure_bfs_performance(maze, start, end):
     return {
         "path": path,
         "execution_time": execution_time,
-        "memory_usage": peak,
+        "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
 
@@ -249,6 +249,6 @@ def measure_astar_performance(maze, start, end):
     return {
         "path": path,
         "execution_time": execution_time,
-        "memory_usage": peak,
+        "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
