@@ -4,7 +4,7 @@ import tracemalloc
 
 def measure_ucs_performance(maze, start, end):
     # Đo thời gian
-    start_time = time.time()
+    start_time = time.perf_counter()
 
     # Đo lượng bộ nhớ
     tracemalloc.start()
@@ -60,19 +60,19 @@ def measure_ucs_performance(maze, start, end):
     path = ucs_with_metrics(maze, start, end)
 
     # Kết quả đo lường
-    execution_time = time.time() - start_time
+    execution_time = time.perf_counter() - start_time
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
     return {
         "path": path,
-        "execution_time": execution_time,  # milliseconds
+        "execution_time": execution_time * 1000,  # milliseconds
         "memory_usage": peak / 1024, # kilobytes
         "expanded_nodes": expanded_nodes[0],
     }
 
 def measure_dfs_performance(maze, start, end):
-    start_time = time.time()
+    start_time = time.perf_counter()
     tracemalloc.start()
 
     expanded_nodes = [0]
@@ -103,19 +103,19 @@ def measure_dfs_performance(maze, start, end):
 
     path = dfs_with_metrics(maze, start, end, set(), [start])
 
-    execution_time = time.time() - start_time
+    execution_time = time.perf_counter() - start_time
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
     return {
         "path": path,
-        "execution_time": execution_time,
+        "execution_time": execution_time * 1000,
         "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
 
 def measure_bfs_performance(maze, start, end):
-    start_time = time.time()
+    start_time = time.perf_counter()
     tracemalloc.start()
 
     expanded_nodes = [0]
@@ -156,19 +156,19 @@ def measure_bfs_performance(maze, start, end):
 
     path = bfs_with_metrics(maze, start, end)
 
-    execution_time = time.time() - start_time
+    execution_time = time.perf_counter() - start_time
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
     return {
         "path": path,
-        "execution_time": execution_time,
+        "execution_time": execution_time * 1000,
         "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
 
 def measure_astar_performance(maze, start, end):
-    start_time = time.time()
+    start_time = time.perf_counter()
     tracemalloc.start()
 
     expanded_nodes = [0]
@@ -242,13 +242,13 @@ def measure_astar_performance(maze, start, end):
 
     path = astar_with_metrics(maze, start, end)
 
-    execution_time = time.time() - start_time
+    execution_time = time.perf_counter() - start_time
     current, peak = tracemalloc.get_traced_memory()
     tracemalloc.stop()
 
     return {
         "path": path,
-        "execution_time": execution_time,
+        "execution_time": execution_time * 1000,
         "memory_usage": peak / 1024,
         "expanded_nodes": expanded_nodes[0],
     }
