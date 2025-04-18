@@ -8,7 +8,7 @@ class Game:
     def __init__(self, win, algorithm):
         self.win = win
         self.algorithm = algorithm
-        self.pacman = Pacman(1, 15)
+        self.pacman = Pacman(13, 17)
         self.ghosts = []
         self.create_ghosts()
         self.maze = MAZE
