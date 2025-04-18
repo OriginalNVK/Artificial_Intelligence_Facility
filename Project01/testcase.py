@@ -2,11 +2,11 @@ from measurement import measure_ucs_performance, measure_dfs_performance, measur
 from settings import MAZE
 
 test_cases = [
-    {"name": "Gần nhau", "start": (3, 4), "end": (5, 6)},
-    {"name": "Khoảng cách trung bình", "start": (3, 4), "end": (9, 12)},
-    {"name": "Xa nhau", "start": (3, 4), "end": (15, 16)},
+    {"name": "Gần nhau", "start": (1, 1), "end": (5, 6)},
+    {"name": "Khoảng cách trung bình", "start": (1, 1), "end": (3, 16)},
+    {"name": "Xa nhau", "start": (1, 1), "end": (9, 12)},
     {"name": "Có nhiều rào cản", "start": (7, 1), "end": (9, 1)},
-    {"name": "Đường dài nhất", "start": (3, 4), "end": (15, 3)},
+    {"name": "Đường dài nhất", "start": (1, 1), "end": (17, 17)},
 ]
 
 results = []
