@@ -8,7 +8,7 @@ class Game:
     def __init__(self, win, algorithm):
         self.win = win
         self.algorithm = algorithm
-        self.pacman = Pacman(17, 17)
+        self.pacman = Pacman(9, 12)
         self.ghosts = []
         self.create_ghosts()
         self.maze = MAZE
@@ -43,10 +43,11 @@ class Game:
 
     def create_ghosts(self):
         if self.algorithm == "ALL":
-            self.ghosts.append(Ghost(1, 1, "BFS", BLUE))
-            self.ghosts.append(Ghost(1, 1, "DFS", PINK))
+            self.ghosts.append(Ghost(1, 17, "A*", RED))
             self.ghosts.append(Ghost(1, 1, "UCS", ORANGE))
-            self.ghosts.append(Ghost(1, 1, "A*", RED))
+            self.ghosts.append(Ghost(17, 1, "BFS", BLUE))
+            self.ghosts.append(Ghost(17, 17, "DFS", PINK))
+
         else:
             self.ghosts.append(Ghost(1, 1, self.algorithm, 
                                  BLUE if self.algorithm == "BFS" else 
@@ -85,10 +86,13 @@ class Game:
 
             
     def update(self):
+        is_all = True if self.algorithm == "ALL" else False
+        ghosts_paths = []
         pacman_pos = self.pacman.get_pos()
         for ghost in self.ghosts:
             if not ghost.path or len(ghost.path) == 0:
-                ghost.find_path(self.maze, pacman_pos)
+                ghost.find_path(self.maze, pacman_pos, ghosts_paths, is_all)
+                ghosts_paths.append(ghost.path)
             # Lưu vị trí hiện tại vào lịch sử
             current_pos = (int(ghost.x), int(ghost.y))
             if not ghost.visited_positions or ghost.visited_positions[-1] != current_pos:

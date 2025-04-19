@@ -21,7 +21,7 @@ class Ghost:
         self.visited_positions = []  # Lưu tất cả các vị trí đã đi qua
         self.show_path = False
         
-    def find_path(self, maze, pacman_pos):
+    def find_path(self, maze, pacman_pos, other_ghosts_paths, is_all):
         start = (int(self.y), int(self.x))
         end = (int(pacman_pos[1]), int(pacman_pos[0]))
         # Sử dụng thuật toán tương ứng với button đã chọn
@@ -35,15 +35,27 @@ class Ghost:
         #         "A*": astar(maze, start, end)
         #     }
         # else:
-        if self.algorithm == "BFS":
-            self.path = bfs(maze, start, end)
-        elif self.algorithm == "DFS":
-            self.path = dfs(maze, start, end)
-        elif self.algorithm == "UCS":
-            self.path = ucs(maze, start, end)
-        elif self.algorithm == "A*":
-            self.path = astar(maze, start, end)
 
+        # since there is only one ghost for each algorithm, 
+        # when it's their turn to receive the paths, it will be of other ghosts
+        if(False == is_all):
+            if self.algorithm == "BFS":
+                self.path = bfs(maze, start, end)
+            elif self.algorithm == "DFS":
+                self.path = dfs(maze, start, end)
+            elif self.algorithm == "UCS":
+                self.path = ucs(maze, start, end)
+            elif self.algorithm == "A*":
+                self.path = astar(maze, start, end)
+        else:
+            if self.algorithm == "BFS":
+                self.path = bfs_all(maze, start, end, other_ghosts_paths)
+            elif self.algorithm == "DFS":
+                self.path = dfs_all(maze, start, end, other_ghosts_paths)
+            elif self.algorithm == "UCS":
+                self.path = ucs_all(maze, start, end, other_ghosts_paths)
+            elif self.algorithm == "A*":
+                self.path = astar_all(maze, start, end, other_ghosts_paths)
         self.path_index = 0
             
     def move(self):
