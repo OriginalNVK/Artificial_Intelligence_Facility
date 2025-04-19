@@ -9,6 +9,7 @@ class Game:
         self.win = win
         self.algorithm = algorithm
         self.pacman = Pacman(13, 17)
+        self.prev_pacman_pos = self.pacman.get_pos()
         self.ghosts = []
         self.create_ghosts()
         self.maze = MAZE
@@ -59,8 +60,18 @@ class Game:
                 self.running = False
                 return "QUIT"
                 
-            # xử lý handle click chuột để pacman di chuyển
-                    
+            # Xử lý sự kiện nhấn phím để di chuyển pacman 
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    self.pacman.move(0, -1, self.maze)  # Move up
+                elif event.key == pygame.K_DOWN:
+                    self.pacman.move(0, 1, self.maze)  # Move down
+                elif event.key == pygame.K_LEFT:
+                    self.pacman.move(-1, 0, self.maze)  # Move left
+                elif event.key == pygame.K_RIGHT:
+                    self.pacman.move(1, 0, self.maze)  # Move right
+                  
+            # Xử lý sự kiện nhấn chuột để kiểm tra nút
             if event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 for button in self.buttons:
@@ -86,14 +97,21 @@ class Game:
             
     def update(self):
         pacman_pos = self.pacman.get_pos()
+        if pacman_pos != self.prev_pacman_pos:
+            self.prev_pacman_pos = pacman_pos
+            # Khi Pacman di chuyển, tất cả ghost tìm đường đến vị trí mới
+            for ghost in self.ghosts:
+                ghost.find_path(self.maze, pacman_pos)
+        
         for ghost in self.ghosts:
+            # Nếu ghost không có đường đi hoặc đường đi rỗng, tìm đường mới
             if not ghost.path or len(ghost.path) == 0:
                 ghost.find_path(self.maze, pacman_pos)
             # Lưu vị trí hiện tại vào lịch sử
             current_pos = (int(ghost.x), int(ghost.y))
             if not ghost.visited_positions or ghost.visited_positions[-1] != current_pos:
                 ghost.visited_positions.append(current_pos)
-
+    
             ghost.move()
         # # Tự động hiển thị khi ghost bắt được Pacman
         # if (int(ghost.x), int(ghost.y)) == pacman_pos:
